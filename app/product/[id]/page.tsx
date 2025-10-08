@@ -1,18 +1,14 @@
 "use client";
+
 import { products, Product } from "@/app/data/product";
 import { notFound } from "next/navigation";
 import { useCart } from "@/app/context/CartContext";
 import Image from "next/image";
 import Link from "next/link";
 
-type PageProps = {
-  params: { id: string };
-};
-
-export default function ProductPage({ params }: PageProps) {
-  const product: Product | undefined = products.find(
-    (p) => p.id === parseInt(params.id)
-  );
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function ProductPage({ params }: any) {
+  const product = products.find((p) => p.id === Number(params.id));
   const { addToCart } = useCart();
 
   if (!product) return notFound();
@@ -23,6 +19,8 @@ export default function ProductPage({ params }: PageProps) {
         <Image
           src={product.image}
           alt={product.name}
+          width={400}
+          height={400}
           className="max-w-full max-h-96 object-contain rounded-xl shadow"
         />
       </div>
